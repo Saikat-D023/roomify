@@ -12,7 +12,6 @@ const Navbar = () => {
             } catch (e) {
                 console.error(`Puter sign out failed: ${e}`);
             }
-
             return;
         }
 

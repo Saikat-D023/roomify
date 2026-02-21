@@ -6,8 +6,8 @@ import Button from "../../components/ui/Button";
 
 export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Roomify" },
+    { name: "description", content: "Welcome to Roomify!" },
   ];
 }
 
@@ -22,7 +22,7 @@ export default function Home() {
             <div className="pulse"></div>
           </div>
 
-          <p>Introducing Roomify 2.0</p>
+          <p>Introducing Roomify</p>
         </div>
 
         <h1>Build beautiful spaces at the speed of thought with Roomify</h1>
