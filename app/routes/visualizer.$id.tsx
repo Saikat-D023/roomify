@@ -1,12 +1,14 @@
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { generate3DView } from "../../lib/ai.action";
 import { Box, Download, RefreshCcw, Share2, X } from "lucide-react";
 import Button from "../../components/ui/Button";
+import { ReactCompareSlider, ReactCompareSliderImage } from "react-compare-slider";
 
 const VisualizerId = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { id } = useParams();
 
     const { initialImage, initialRender, name } = location.state || {};
 
@@ -16,6 +18,16 @@ const VisualizerId = () => {
     const [currentImage, setCurrentImage] = useState<string | null>(initialRender || null);
 
     const handleBack = () => navigate('/');
+    const handleExport = () => {
+        if (!currentImage) return;
+
+        const link = document.createElement('a');
+        link.href = currentImage;
+        link.download = `draftly-${id || 'design'}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
     const runGeneration = async () => {
         if (!initialImage) return;
@@ -52,10 +64,10 @@ const VisualizerId = () => {
     return (
         <div className="visualizer">
             <nav className="topbar">
-                <div className="brand">
+                <div className="brand" onClick={handleBack}>
                     <Box className="logo" />
 
-                    <span className="name">Roomify</span>
+                    <span className="name">Draftly</span>
                 </div>
                 <Button variant="ghost" size="sm" onClick={handleBack} className="exit">
                     <X className="icon" /> Exit Editor
@@ -74,7 +86,7 @@ const VisualizerId = () => {
                         <div className="panel-actions">
                             <Button
                                 size="sm"
-                                onClick={() => { }}
+                                onClick={handleExport}
                                 className="export"
                                 disabled={!currentImage}
                             >
@@ -108,6 +120,36 @@ const VisualizerId = () => {
                         )}
                     </div>
 
+                </div>
+                <div className="panel compare">
+                    <div className="panel-header">
+                        <div className="panel-meta">
+                            <p>Comparison</p>
+                            <h3>Before and After</h3>
+                        </div>
+                        <div className="hint">Drag to compare</div>
+                    </div>
+
+                    <div className="compare-stage">
+                        {initialImage && currentImage ? (
+                            <ReactCompareSlider
+                                defaultValue={50}
+                                style={{ width: '100%', height: 'auto' }}
+                                itemOne={
+                                    <ReactCompareSliderImage src={initialImage} alt="before" className="compare-img" />
+                                }
+                                itemTwo={
+                                    <ReactCompareSliderImage src={currentImage} alt="after" className="compare-img" />
+                                }
+                            />
+                        ) : (
+                            <div className="compare-fallback">
+                                {initialImage && (
+                                    <img src={initialImage} alt="Before" className="compare-img" />
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
         </div>

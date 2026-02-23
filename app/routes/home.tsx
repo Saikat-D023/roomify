@@ -10,8 +10,8 @@ import { createProject } from "../../lib/puter.action";
 
 export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Roomify" },
-    { name: "description", content: "Welcome to Roomify!" },
+    { title: "Draftly" },
+    { name: "description", content: "Welcome to Draftly!" },
   ];
 }
 
@@ -59,13 +59,13 @@ export default function Home() {
             <div className="pulse"></div>
           </div>
 
-          <p>Introducing Roomify</p>
+          <p>Introducing Draftly</p>
         </div>
 
-        <h1>Build beautiful spaces at the speed of thought with Roomify</h1>
+        <h1>Build beautiful spaces at the speed of thought with Draftly</h1>
 
         <p className="subtitle">
-          Roomify is an AI-first design environment that helps you visualize, render, and ship architectural projects faster  than ever.
+          Draftly is an AI-first design environment that helps you visualize, render, and ship architectural projects faster  than ever.
         </p>
 
         <div className="actions">
